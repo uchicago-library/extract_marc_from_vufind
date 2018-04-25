@@ -1,0 +1,10 @@
+wheel
+flake8
+coverage
+pytest
+twine
+autopep8
+check-manifest
+sphinx
+sphinx-autobuild
+sphinx-rtd_theme

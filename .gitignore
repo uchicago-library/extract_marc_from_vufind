@@ -1,0 +1,10 @@
+env/*
+*cache__*
+*__pycache__*
+build/*
+dist/*
+*egg*
+WinENV/*
+.vscode/*
+*pytest_cache*
+manifests*
