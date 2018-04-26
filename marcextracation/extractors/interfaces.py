@@ -1,5 +1,5 @@
 
-from abc import ABCMeta, abstractclassmethod, abstractproperty
+from abc import ABCMeta, abstractclassmethod, abstractmethod, abstractproperty
 
 class Extractor(object, metaclass=ABCMeta):
     @abstractclassmethod
@@ -10,10 +10,9 @@ class Extractor(object, metaclass=ABCMeta):
     def get_record(self):
         pass
 
-    @abstracmethod
+    @abstractmethod
     def set_record(self):
         pass
 
     record = property(get_record, set_record)
-
-    @abstractproperty
+    
