@@ -3,11 +3,20 @@ import unittest
 from six import BytesIO
 from tempfile import TemporaryFile
 
+from marcextraction.lookup import MarcFieldLookup
 from marcextraction.factories import ExtractorFactory
 
 class Tests(unittest.TestCase):
     def setUp(self):
         pass
+
+    def testLookupMainEntryPersonalNameIndexField(self):
+        query = MarcFieldLookup("Main Entry - Personal name", "Personal name")
+        self.assertEqual(query.show_index_field(), '100a')
+
+    def testLookupCartographicMahDataCoordiantes(self):
+        query = MarcFieldLookup("Cartographic Mathemtical Data", "Statement of coordinates")
+        self.assertEqual(query.show_index_field(), '255c')
 
     def testExtractFromDisk(self):
         """
