@@ -12,6 +12,12 @@ from ..constants import LOOKUP
 from ..lookup import MarcFieldLookup
 
 class Extractor(object, metaclass=ABCMeta):
+    @classmethod
+    @abstractmethod
+    def from_dict(self, input_dict):
+        raise NotImplementedError
+
+    @abstractmethod
     def search(self):
         raise NotImplementedError
 
@@ -39,6 +45,9 @@ class VuFindExtractor(Extractor):
             return [item for sublist in x['controlfield_001'] for x in result for item in sublist]
         else:
             return []
+
+    def from_dict(self, input_dict):
+        pass
 
 
 class OnDiskExtractor(Extractor):
