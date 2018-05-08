@@ -21,6 +21,10 @@ class Extractor(object, metaclass=ABCMeta):
     def search(self):
         raise NotImplementedError
 
+    @abstractmethod
+    def count(self):
+        raise NotImplementedError
+
 class VuFindExtractor(Extractor):
     def __init__(self, index_url, query_term, query_field=None, query_subfield=None):
         try:
@@ -42,11 +46,20 @@ class VuFindExtractor(Extractor):
             query = self.query_term
             result = self.solr_index.search(query)
         if result.hits > 0:
-            return [item for sublist in x['controlfield_001'] for x in result for item in sublist]
+            self.total = result.hits
+            self.records = [item for sublist in x['controlfield_001'] for x in result for item in sublist]
+            return self.records 
         else:
             return []
 
+    def count(self):
+        if hasattr(self, 'records', None):
+            return self.total
+        
     def from_dict(self, input_dict):
+        pass
+
+    def from_flo(self, flo):
         pass
 
 
@@ -54,6 +67,7 @@ class OnDiskExtractor(Extractor):
     def __init__(self, location, query_field=None, query_subfield=None, query_term=None):
         if exists(location):
             self.records = self._build_list_of_records(location)
+            self.total = len(self.records)
         else:
             raise ValueError("invalid location value")
         if query_field and query_subfield and query_term:
@@ -71,6 +85,9 @@ class OnDiskExtractor(Extractor):
             msg = "{} is not a valid MARC record".format(some_path)
             self.errors.append(msg)
             return (False, None)
+
+    def count(self):
+        return self.total
 
     def _find_marc_files(self, path):
         for n_thing in scandir(path):
@@ -90,7 +107,7 @@ class OnDiskExtractor(Extractor):
             validity, data_package = self._check_if_real_marc_record(path_on_disk)
             if validity:
                 records += [record.as_dict() for record in data_package]
-        self.records = records
+        return records
 
     def search(self):
         record = None

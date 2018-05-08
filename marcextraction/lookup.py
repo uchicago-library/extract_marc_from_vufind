@@ -13,13 +13,29 @@ class MarcFieldLookup:
             for n in field:
                 mf = n.get("field")
                 for subfield in n.get("subfields"):
+                    print(subfield)
                     if subfield.get("label") == sub_field_name:
                         sf = subfield.get("code")
                         break
         if mf and sf:
-            return str(mf)+str(sf)
+            value = str(mf)+str(sf)
+            return value
+
+    @staticmethod
+    def show_valid_lookups(pretty_print=True):
+        if pretty_print:
+            for field in LOOKUP:
+                if field.get("field", None):
+                    print("MARC Field: {}".format(field.get("label")))
+                    for subfield in field.get("subfields", []):
+                        print("\tSubfield: {}".format(subfield.get("label")))
         else:
-            return None
+            for field in LOOKUP:
+                if field.get("field", None):
+                     print("MARC Field: {}".format(field.get("label")))
+                     for subfield in field.get("subfields", []):
+                        print("Subfield: {}".format(subfield.get("label")))
+ 
 
     def show_index_field(self):
         return self.index_field

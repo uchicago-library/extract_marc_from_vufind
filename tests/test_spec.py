@@ -1,4 +1,5 @@
 
+from pymarc import Record, Field
 import unittest
 from six import BytesIO
 from tempfile import TemporaryFile
@@ -8,7 +9,7 @@ from marcextraction.factories import ExtractorFactory
 
 class Tests(unittest.TestCase):
     def setUp(self):
-        pass
+        self.extractor = ExtractorFactory('file_import').build()
 
     def testLookupMainEntryPersonalNameIndexField(self):
         query = MarcFieldLookup("Main Entry - Personal name", "Personal name")
@@ -25,9 +26,15 @@ class Tests(unittest.TestCase):
         b.) the built extractor is able to extract the data from a file like object
         c.) the right available methods gets returned for retrieving the data  
         """
-        extractor = ExtractorFactory('file_import').build()
-        
-        extracted_data = extractor.from_external_source(file_like_object)
+
+        record = Record()
+        record.add_field(Field(tag='245', indicators=['0','1'],
+                               subfields=[
+                                'a','Test book :',
+                                'b','a simple test object /',
+                                'c','John Doe'])
+        )
+        extracted_data = self.extractor.from_flo(flo)
         converted_data = extracted_data.to_dict()
-        self.assertEqual(extractor.count(), 1)
-        self.assertEqual(extractor.get_record_title(), "")
+        self.assertEqual(self.extractor.count(), 1)
+        self.assertEqual(converted_data.get_record_title(), "")
