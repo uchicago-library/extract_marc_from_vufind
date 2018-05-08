@@ -12,13 +12,24 @@ from ..constants import LOOKUP
 from ..lookup import MarcFieldLookup
 
 class Extractor(object, metaclass=ABCMeta):
+    """an abstract Extractor class; meant to be used as interface class
+
+    Any class inheriting from this class must have implemented  
+
+    from_contract which is a class method taking one parameter a dict
+
+    search which is is a method taking one parameter lookup which must be an instance 
+    of MarcFieldLookup 
+    """
     @classmethod
     @abstractmethod
-    def from_dict(self, input_dict):
+    def from_contract(self, input_dict):
         raise NotImplementedError
 
     @abstractmethod
     def search(self):
+        """
+        """
         raise NotImplementedError
 
     @abstractmethod
@@ -26,20 +37,19 @@ class Extractor(object, metaclass=ABCMeta):
         raise NotImplementedError
 
 class VuFindExtractor(Extractor):
-    def __init__(self, index_url, query_term, query_field=None, query_subfield=None):
+    def __init__(self, index_url, query_term)
         try:
             get(index_url, "head")
             self.solr_index = Solr(index_url)
         except:
             ConnectionError
-        if query_field and query_subfield and query_term:
-            self.field_term = MarcFieldLookup(query_field, query_subfield).show_index_field()
         self.query_term = query_term
 
-    def search(self):
+    def search(self, field_lookup=None):
         query = None
         result = []
-        if self.field_term:
+        if field_lookup:
+            lookup = field_lookup.show_index_field()
             query = "mdf_{}:{}".format(self.field_term, self.query_term)
             result = self.solr_index.search(q=query)
         else:
@@ -50,17 +60,18 @@ class VuFindExtractor(Extractor):
             self.records = [item for sublist in x['controlfield_001'] for x in result for item in sublist]
             return self.records 
         else:
-            return []
+            self.total = 0
+            self.records = []
+        return self.records
 
     def count(self):
         if hasattr(self, 'records', None):
             return self.total
-        
-    def from_dict(self, input_dict):
-        pass
-
-    def from_flo(self, flo):
-        pass
+    
+    @classmethod
+    def from_contract(cls, input_dict):
+        if input_dict.get("index_url", None) and input_dict.get("query_term", None):
+            new_instance = cls(input_dict.get("index_url"), input_dict.get("query_term"))
 
 
 class OnDiskExtractor(Extractor):

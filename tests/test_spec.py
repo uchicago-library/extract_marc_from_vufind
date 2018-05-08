@@ -9,7 +9,8 @@ from marcextraction.factories import ExtractorFactory
 
 class Tests(unittest.TestCase):
     def setUp(self):
-        self.extractor = ExtractorFactory('file_import').build()
+        self.ondisk_extractor = ExtractorFactory("file_import").build()
+        self.vufind_extractor = ExtractorFactory("vufind").build()
 
     def testLookupMainEntryPersonalNameIndexField(self):
         query = MarcFieldLookup("Main Entry - Personal name", "Personal name")
@@ -34,7 +35,17 @@ class Tests(unittest.TestCase):
                                 'b','a simple test object /',
                                 'c','John Doe'])
         )
-        extracted_data = self.extractor.from_flo(flo)
+        flo = BytesIO(record.as_marc())
+        extracted_data = self.ondisk_extractor.from_contract({"filo": flo})
         converted_data = extracted_data.to_dict()
         self.assertEqual(self.extractor.count(), 1)
         self.assertEqual(converted_data.get_record_title(), "")
+
+    def testExtractFromVuFind(self):
+        extracted_data = self.ondisk_extractor.from_contract(
+            {
+                "index_url": "http://",
+            })
+        extracted_data.search('245a', 'bananas')
+        self.assertEqual(extracted_data.count(), 1)
+        self.asssertEqual(extracted_data.get_record_title, "")
