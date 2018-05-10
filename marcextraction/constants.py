@@ -169,7 +169,7 @@ LOOKUP = [
         "subfields": [
             {"code": "a", "label": "Title"},
             {"code": "b", "label": "Remainder of title"},
-            {"code": "c", "label": "Statement of responsibility"},
+            {"code": "c", "label": "Statement of responsibility, etc."},
             {"code": "f", "label": "Inclusive dates"},
             {"code": "g", "label": "Buk dates"},
             {"code": "h", "label": "Medium"},
