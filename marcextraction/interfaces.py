@@ -9,8 +9,8 @@ from pysolr import Solr
 from requests import get
 from requests.exceptions import ConnectionError
 
-from ..constants import LOOKUP
-from ..lookup import MarcFieldLookup
+from .constants import LOOKUP
+from .lookup import MarcFieldLookup
 
 
 class SolrIndexSearcher:

@@ -4,7 +4,7 @@ Auto Docs
 .. automodule:: marcextraction.utils
     :members:
 
-.. automodule:: marcextraction.extractors.interface
+.. automodule:: marcextraction.interface
     :members:
 
 .. automodule:: marcextraction.constants

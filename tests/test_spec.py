@@ -6,7 +6,7 @@ import unittest
 from six import BytesIO
 from tempfile import TemporaryFile, TemporaryDirectory
 
-from marcextraction.extractors.interfaces import SolrIndexSearcher, OnDiskSearcher
+from marcextraction.interfaces import SolrIndexSearcher, OnDiskSearcher
 from marcextraction.lookup import MarcFieldLookup
 from marcextraction.utils import create_ole_index_field, create_ole_query
 
