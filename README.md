@@ -227,6 +227,8 @@ If you want get the bib numbers for a particular set of results from am OLE inde
 ## Additional Links
 
 - [MARC21 Bibliographic Data]()https://www.loc.gov/marc/bibliographic/) for the field and subfield labels to use when looking up a particular field
+- [readthedocs documentation](http://extract-marc-from-vufind.readthedocs.io/en/latest/index.html)
+
 ## Author
 
 - verbalhanglider (tdanstrom@uchicago.edu)
