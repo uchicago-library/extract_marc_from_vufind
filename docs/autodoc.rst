@@ -1,6 +1,3 @@
-Auto Docs
-=========
-
 Interface Classes
 =================
 
@@ -15,10 +12,3 @@ Utilities for Building Index Field Names and Query Strings
 
 .. automodule:: marcextraction.utils
     :members:
-
-Constants used for Looking Up MARC field codes
-==============================================
-
-.. automodule:: marcextraction.constants
-    :members:
-

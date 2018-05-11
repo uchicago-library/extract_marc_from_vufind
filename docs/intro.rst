@@ -1,13 +1,27 @@
 About
 =====
 
-This is an application that will allow the user to do the following
+Introduction
+------------
 
-1. point it at 1 or more MARC files (either binary or MARCXML)
-2. tell the application what type of MARC file it is (binary or MARCXML)
-3. have the system convert all the MARC records into IIIF manifests with only the descriptive metadata defined.
+This is a Python library that allows a consumer to extract MARC records from
 
-Author Information
-==================
+- a file exported to disk
+- a VuFind API
+
+Quick start
++++++++++++
+
+.. code-block:: python
+    git cone git@github.com:uchicago-library/extract_marc_from_vufind
+    cd extract_marc_from_vufind
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    python setup.py develop
+
+
+Author 
+------
 
 - verbalhanglider (tdanstrom@uchicago.edu)
