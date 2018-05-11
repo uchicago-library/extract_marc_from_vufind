@@ -1,4 +1,10 @@
 
+"""the constants used for finding marc field and codes by labels
+
+These are used in the MARCFieldLookup class to allow consumer 
+to get a MARC field and subfield by looking up human understandable labels
+"""
+
 LOOKUP = [
     {"field": 100,
      "label": "Main Entry - Personal name",

@@ -1,3 +1,5 @@
+"""the interface classes to allow for building a list of records and/or searching for relevant records
+"""
 
 from abc import ABCMeta, abstractclassmethod, abstractmethod, abstractproperty
 from io import BytesIO
@@ -11,21 +13,64 @@ from requests.exceptions import ConnectionError
 
 from .constants import LOOKUP
 from .lookup import MarcFieldLookup
-
+from .utils import create_ole_index_field, create_ole_query
 
 class SolrIndexSearcher:
+    """a class to be used to search a Solr index for a query
+    """
     def __init__(self, index_url, field_definition, query_creator):
-        try:
+        """initializes an instance of the class SolrIndexSearcher 
+
+        Args:
+            index_url (str): the URL to the SOLR index that will be queried.
+            index_type (str): a flag indicating which type of index is being used. 
+                Needed for being able to generate the correct index field name
+ 
+        """
+        try: # have to check if index_url inputted is a resolveable URL
             get(index_url, "head")
             self.solr_index = Solr(index_url)
             self.index_url = self.solr_index.url
             self.field_creator = field_definition
             self.query_creator = query_creator
         except ConnectionError:
-            raise
-        self.errors = []
+            pass # not sure what to do if ConnectionError does happen. 
+                 # it's a deal breaker. should be logged somehow.
+
+    def _build_field_definer(self, flag):
+        """a private method to build the field definition
+
+         Args
+            flag (str): an indicate of what the field is in the index
+        """
+        if flag == 'ole':
+            return create_ole_index_field
+        else:
+            raise ValueError("invalid index_type {}".format(flag))
+
+    def _set_query_creator(self, flag):
+        """a private method to set the query_creator function of the instance
+
+        Args
+            flag (str): an indicato of what kind of query construction needs to be done
+        """
+        if flag == 'ole':
+            return create_ole_query
+        else:
+            raise ValueError("invalid index type '{}' for query creation".format(flag))
 
     def search(self, query_term, query_field, query_subfield):
+        """a method to run a search on the index for a particular value in a particular field
+
+        Args:
+            query_term (str): the string to be searched. This string will be stemmed in Solr searches.
+            query_field: the label for the MARC21 field that you want to search in.
+            query_subfield: the label for the relevant subfield of the MARC21 field that you want to search.
+
+        Returns:
+            list. An iterable containing dictionaries for each matching record in the Solr index 
+                for the query_term, query_field, and query_subfield.
+        """
         query = None
         result = []
         field_name = MarcFieldLookup(
@@ -45,12 +90,16 @@ class SolrIndexSearcher:
         else:
             return []
 
-    def count(self):
-        if hasattr(self, 'records', None):
-            return self.total
-
 
 class OnDiskSearcher:
+    """a class to use for building up a list of exported MARC files at a particular location on-disk
+
+    Useage:
+        searcher  = OnDiskSeacher(location='/path/to/marc/records')
+        searcher.search('Cartographic Mathematical Data', 'Spatial coordinates')
+
+
+    """
     def __init__(self, writeable_object=None, location=None):
         if location and exists(location):
             self.records = self._build_list_of_records(location)
@@ -84,12 +133,19 @@ class OnDiskSearcher:
     def count(self):
         """a method to return the total number of records extracted
 
-        :rtype int
+        Returns:
+            int. total records found on-disk
         """
         return self.total
 
     def _find_marc_files(self, path):
         """a generator function to return a list of valid MARC records found from a particular location on-disk
+
+        Args:
+            path (str): a location on disk to a file or a directory
+
+        Returns:
+            generator. an interable containing MARC record objects 
         """
         for n_thing in scandir(path):
             if n_thing.is_dir():
@@ -105,6 +161,12 @@ class OnDiskSearcher:
 
     def _build_list_of_records(self, path_on_disk):
         """a  method to get a list of MARC records transformed to dictionaries to allow for searching
+
+        Args:
+            path_on_disk (str): a particular location on-disk
+
+        Returns:
+            list. an iterable containing dictionaries representing MARC records
         """
         records = []
         if isdir(path_on_disk):
@@ -123,11 +185,13 @@ class OnDiskSearcher:
     def search(self, query_term, query_field, query_subfield):
         """a method to search for records matching query term and field lookup
 
-        :param str query term: a word or phrase that should be present in relevant MARC records
-        :param str query_field: a valid MARC field label
-        :param str query_subfield: a valid MARC subfield label for a subfield associated with the MARC field entered
+        Args:
+            query term (str): a word or phrase that should be present in relevant MARC records
+            query_field (str): a valid MARC field label
+            query_subfield (str): a valid MARC subfield label for a subfield associated with the MARC field entered
 
-        Returns a list of dicts representing MARC records that match the search parameters or an empty list
+        Returns:
+            list. an iterable contianing dicitonaries
 
         :rtype list
         """
@@ -151,8 +215,10 @@ class OnDiskSearcher:
     def from_flo(cls, flo):
         """a method to instantiate an instance of OnDiskExtractor from a file-like object
 
-        :param file_like_object flo: a bytes object with write and read methods
+        Args:
+            flo (File Object): a file-like object with read, write methods 
 
-        :rtype instance:`OnDiskExtractor`
+        Returns:
+            OnDiskSearcher
         """
         return cls(writeable_object=flo)
