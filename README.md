@@ -192,7 +192,7 @@ In order to get the index field name for Uniform Title:
 If on the other hand you are looking to find some particular subset of a bunch of MARC records that you have on-disk, you can do something like the following.
 
 ```python
->>> from marcextraction.extractors.interfaces import OnDiskSearcher
+>>> from marcextraction.interfaces import OnDiskSearcher
 >>> searcher = OnDiskSearcher(location='/path/to/a/bunch/of/marc/record/files')
 >>> results = searcher.search('banana', 'Title Statement', 'Title')
 ```
@@ -205,7 +205,7 @@ This example will do the following
 Still, you might be in an organization using OLE. In which case, you could do something like this.
 
 ```python
->>> from marcextraction.extractors.interfaces import VuFindSearcher
+>>> from marcextraction.interfaces import VuFindSearcher
 >>> searcher = SolrIndexSearcher('http://your.domain/path/to/index', create_ole_index_field, create_ole_query)
 >>> results = searcher.search('banana', 'Title Statement', 'Title')
 ```
@@ -214,7 +214,7 @@ This example does the same thing as the earlier example except this time it's se
 If you want get the bib numbers for a particular set of results from am OLE index search, you should do the following.
 
 ```python
->>> from marcextraction.extractors.interfaces import VuFindSearcher
+>>> from marcextraction.interfaces import VuFindSearcher
 >>> searcher = SolrIndexSearcher('http://your.domain/path/to/index', create_ole_index_field, create_ole_query)
 >>> results = searcher.search('banana', 'Title Statement', 'Title')
 >>> results = find_ole_bib_numbers(results)
