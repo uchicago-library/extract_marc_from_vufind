@@ -15,5 +15,10 @@ setup(
         "Development Status :: 5 - Alpha/Prototype",
         "Intended Audience :: Education",
         "Operating System :: POSIX :: Linux",
+    ],
+    install_requires = [
+        'pymarc',
+        'pysolr',
+        'requests'
     ]
 )

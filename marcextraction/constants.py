@@ -494,7 +494,29 @@ LOOKUP = [
      },
     {"field": 830,
      "label": "Series Added Entry - Uniform Title",
-     "subfields": []
+     "subfields": [
+         {"code": "a", "label": "Uniform title"},
+         {"code": "b", "label": "Date of treaty signing"},
+         {"code": "f", "label": "Date of a work"},
+         {"code": "g", "label": "Miscellaneous information"},
+         {"code": "k", "label": "Form subheading"},
+         {"code": "l", "label": "Language of a work"},
+         {"code": "m", "label": "Medium of a performance for music"},
+         {"code": "n", "label": "Number of part/section of a work"},
+         {"code": "o", "label": "Arranged statement for music"},
+         {"code": "r", "label": "Key for music"},
+         {"code": "s", "label": "Version"},
+         {"code": "t", "label": "Title of a work"},
+         {"code": "v", "label": "Volume/sequential designation"},
+         {"code": "w", "label": "Bibliographic record control number"},
+         {"code": "x", "label": "International Standard Serial Number"},
+         {"code": "0", "label": "Authority record control number or standard number"},
+         {"code": "1", "label": "Real World Object URI"},
+         {"code": "3", "label": "Materials specified"},
+         {"code": "5", "label": "Institution to which field applies"},
+         {"code": "7", "label": "Control subfield"},
+         {"code": "8", "label": "Field link and sequence number"}
+     ]
      },
     {"841": "Holdings Coded Data Values"
      },

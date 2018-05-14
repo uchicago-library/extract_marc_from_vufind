@@ -18,7 +18,7 @@ from .utils import create_ole_index_field, create_ole_query
 class SolrIndexSearcher:
     """a class to be used to search a Solr index for a query
     """
-    def __init__(self, index_url, field_definition, query_creator):
+    def __init__(self, index_url, index_type):
         """initializes an instance of the class SolrIndexSearcher 
 
         Args:
@@ -31,8 +31,8 @@ class SolrIndexSearcher:
             get(index_url, "head")
             self.solr_index = Solr(index_url)
             self.index_url = self.solr_index.url
-            self.field_creator = field_definition
-            self.query_creator = query_creator
+            self.field_creator = self._build_field_definer(index_type)
+            self.query_creator = self._set_query_creator(index_type)
         except ConnectionError:
             pass # not sure what to do if ConnectionError does happen. 
                  # it's a deal breaker. should be logged somehow.
