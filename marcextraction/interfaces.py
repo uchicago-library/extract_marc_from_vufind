@@ -87,7 +87,6 @@ class SolrIndexSearcher:
             result = self.solr_index.search(query)
         if result.hits > 0:
             self.total = result.hits
-            print(self.total)
             self.records = [x for x in result]
             return self.records
         else:
@@ -237,7 +236,7 @@ class OLERecordFinder:
     """
     def __init__(self, bibnumber, ole_domain, ole_scheme, ole_path):
         self.identifier = bibnumber
-        self.record = self._find_record(ole_domain, ole_scheme, ole_path, bibnumber)
+        self.records = self._find_record(ole_domain, ole_scheme, ole_path, bibnumber)
 
     def _find_record(self, ole_domain, ole_scheme, ole_path, bibnumber):
         query_param_value = quote("id={}".format(self.identifier))
@@ -256,10 +255,7 @@ class OLERecordFinder:
             found_records = xml_doc.findall("{http://www.loc.gov/zing/srw/}records/{http://www.loc.gov/zing/srw/}record/{http://www.loc.gov/zing/srw/}recordData/record")
             found_records = [ElementTree.tostring(x) for x in found_records]
             found_records =  [XML_to_string(XML(x, parser=parser)) for x in found_records]
-            if len(found_records) > 1 or len(found_records) == 0:
-                raise ValueError("something went wrong: there are multiple records for {}".format(bibnumber))
-            else:
-                return found_records[0]
+            return found_records
         else:
             return None
 
@@ -269,7 +265,7 @@ class OLERecordFinder:
         Returns:
             tuple. first element is boolean result 
         """
-        if self.record:
-            return (True, self.record)
+        if self.records:
+            return (True, self.records)
         else:
             return (False, None)
