@@ -1,15 +1,22 @@
 
-from os import remove, rmdir, getlogin, listdir
+from os import remove, rmdir, getlogin, listdir, environ
 from os.path import join
 from pymarc import Record, Field
 import unittest
 from six import BytesIO
 from tempfile import TemporaryFile, TemporaryDirectory
+from urllib.parse import urlparse
 
-from marcextraction.interfaces import SolrIndexSearcher, OnDiskSearcher
+from marcextraction.interfaces import SolrIndexSearcher, OnDiskSearcher, OLERecordFinder
 from marcextraction.lookup import MarcFieldLookup
 from marcextraction.utils import create_ole_index_field, create_ole_query
 
+# in order to run tests need to run locally from a computer on the uchicago library subnet to test against library OLE indexes
+# in linux/unix issue the following command 
+# SOLR_INDEX="[uchicago solr index]" OLE_INDEX="[uchicago sru api]"  pytest tests/
+
+SOLR_INDEX = environ["SOLR_INDEX"] 
+OLE_INDEX = environ["OLE_INDEX"]
 
 class Tests(unittest.TestCase):
     def setUp(self):
@@ -73,9 +80,9 @@ class Tests(unittest.TestCase):
 
     def testCreatingSolrIndexSearcher(self):
         searcher = SolrIndexSearcher(
-            "http://olereport02.uchicago.edu:8180/solr/bib/", create_ole_index_field, create_ole_query)
+            SOLR_INDEX, "ole")
         self.assertEqual(searcher.index_url,
-                         'http://olereport02.uchicago.edu:8180/solr/bib/')
+                         SOLR_INDEX)
 
     def testSearchingOnDiscRecords(self):
         tempdir = TemporaryDirectory()
@@ -111,6 +118,13 @@ class Tests(unittest.TestCase):
 
     def testSearchingVuFind(self):
         searcher = SolrIndexSearcher(
-            "http://olereport02.uchicago.edu:8180/solr/bib/", create_ole_index_field, create_ole_query)
+            SOLR_INDEX, 'ole')
         results = searcher.search('Banana', "Title Statement", "Title")
         self.assertEqual(len(results), 10)
+
+    def testSearchingOleIndex(self):
+        url_object = urlparse(OLE_INDEX)
+        finder = OLERecordFinder("4270571", url_object.netloc, url_object.scheme, url_object.path)
+        check = finder.get_record()
+        self.assertEqual(check[0], True)
+    

@@ -3,6 +3,7 @@
 
 from abc import ABCMeta, abstractclassmethod, abstractmethod, abstractproperty
 from io import BytesIO
+from lxml.etree import XMLParser, XML, tostring as XML_to_string
 from os import scandir, stat
 from os.path import exists, isfile, isdir
 from pymarc import MARCReader
@@ -10,6 +11,8 @@ from pymarc.exceptions import RecordLengthInvalid
 from pysolr import Solr
 from requests import get
 from requests.exceptions import ConnectionError
+from urllib.parse import ParseResult, quote, unquote
+from xml.etree import ElementTree
 
 from .constants import LOOKUP
 from .lookup import MarcFieldLookup
@@ -222,3 +225,51 @@ class OnDiskSearcher:
             OnDiskSearcher
         """
         return cls(writeable_object=flo)
+
+class OLERecordFinder:
+    """a class to use for finding a particular MARC record from the OLE API
+
+    Useage:
+        finder = OLERecordFinder("1003495521", "https://example.com/oledocstore")
+        is_it_there, data = finder.get_record()
+        if is_it_there:
+            return data
+    """
+    def __init__(self, bibnumber, ole_domain, ole_scheme, ole_path):
+        self.identifier = bibnumber
+        self.record = self._find_record(ole_domain, ole_scheme, ole_path, bibnumber)
+
+    def _find_record(self, ole_domain, ole_scheme, ole_path, bibnumber):
+        query_param_value = quote("id={}".format(self.identifier))
+        query_string = "version=1.2&operation=searchRetrieve&query={}&startRecord=1&maximumRecords=1".format(
+            query_param_value)
+        url_object = ParseResult(scheme=ole_scheme, netloc=ole_domain,
+                                 path=ole_path, query=query_string, params="", fragment="")
+        url = url_object.geturl()
+        data = get(url)
+        parser = XMLParser(remove_blank_text=True)
+        if data.status_code == 200:
+            # handy code for cleaning up newlines and spaces from XML output taken from
+            # https://stackoverflow.com/questions/3310614/remove-whitespaces-in-xml-string
+
+            xml_doc = ElementTree.fromstring(data.content)
+            found_records = xml_doc.findall("{http://www.loc.gov/zing/srw/}records/{http://www.loc.gov/zing/srw/}record/{http://www.loc.gov/zing/srw/}recordData/record")
+            found_records = [ElementTree.tostring(x) for x in found_records]
+            found_records =  [XML_to_string(XML(x, parser=parser)) for x in found_records]
+            if len(found_records) > 1 or len(found_records) == 0:
+                raise ValueError("something went wrong: there are multiple records for {}".format(bibnumber))
+            else:
+                return found_records[0]
+        else:
+            return None
+
+    def get_record(self):
+        """a public method to get the matching record (if one was found for the inputted bibnumber)
+
+        Returns:
+            tuple. first element is boolean result 
+        """
+        if self.record:
+            return (True, self.record)
+        else:
+            return (False, None)
