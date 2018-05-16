@@ -65,16 +65,18 @@ class MarcFieldLookup:
         if pretty_print:
             for field in LOOKUP:
                 if field.get("field", None):
-                    output += "MARC Field: {}\n".format(field.get("label"))
+                    output += "MARC Field: {} {}\n".format(field.get("field"), field.get("label"))
                     for subfield in field.get("subfields", []):
-                        output += "\tSubfield: {}\n".format(
+                        output += "\tSubfield: {} {}\n".format(
+                            subfield.get("code"),
                             subfield.get("label"))
         else:
             for field in LOOKUP:
                 if field.get("field", None):
-                    output += "MARC Field: {}\n".format(field.get("label"))
+                    output += "MARC Field: {} {}\n".format(field.get("field"), field.get("label"))
                     for subfield in field.get("subfields", []):
-                        output += "Subfield: {}\n".format(
+                        output += "Subfield: {} {}\n".format(
+                            subfield.get("code"),
                             subfield.get("label"))
         return output
 
