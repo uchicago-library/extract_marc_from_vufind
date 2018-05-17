@@ -31,7 +31,6 @@ def find_ole_bib_numbers(ole_data_list):
         list. an iterable containing strings that should represent bib numbers. Ex. ['1000435999', '10045334500']
     """
     output = []
-    print(type(ole_data_list))
     for n_thing in ole_data_list:
         output += n_thing.get("controlfield")
     return output

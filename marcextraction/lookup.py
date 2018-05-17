@@ -41,11 +41,12 @@ class MarcFieldLookup:
 
     def _find_a_field(self, label=None, number=None):
         if label:
+            print('hi')
             field = [x for x in LOOKUP if x.get("label") == label]
-            err_msg = "no field found for {}".format(field)
+            err_msg = "no field found for {}".format(label)
         elif number:
             field = [x for x in LOOKUP if x.get("field") == number]
-            err_msg = "no field found for {}".format(label)
+            err_msg = "no field found for {}".format(number)
         if field: 
             subfields = field[0].get("subfields")
             if not subfields:
@@ -61,7 +62,7 @@ class MarcFieldLookup:
             subfield = [x for x in subfield_list if x.get("label") == label]
             err_msg = "no subfield field found for {}".format(label)
         elif code:
-            subfield = [x for x in subfield_list if x.get("code") == label]
+            subfield = [x for x in subfield_list if x.get("code") == code]
             err_msg = "no subfield field found for {}".format(code)
         if subfield:
             return subfield[0].get("code")

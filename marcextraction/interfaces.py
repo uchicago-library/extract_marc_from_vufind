@@ -96,10 +96,11 @@ class SolrIndexSearcher:
         else:
             result = self.solr_index.search(query_term, fl='controlfield_001', rows=1000)
         if result.hits > 1000:
-            raise Exception("you are performing a Solr search with more than 1000 hits. I can only get searches with 1000 at this time")
+            print(query_chain)
+            raise Exception("you are performing a Solr search with {} hits. I can only get searches with 1000 at this time".format(result.hits))
         else:
             records = [x.get("controlfield_001") for x in result.docs]
-            return records
+            return [item for sublist in records for item in sublist]
 
 class OnDiskSearcher:
     """a class to use for building up a list of exported MARC files at a particular location on-disk
@@ -208,10 +209,10 @@ class OnDiskSearcher:
 
         :rtype list
         """
+        print("hola dude")
         if field and subfield:
             field = MarcFieldLookup(field=field, subfield=subfield)
         elif field_label and subfield_label:
-            print("hi from search ondisk for field_label and subfield_label")
             field = MarcFieldLookup(field_label=field_label, subfield_label=subfield_label)
         elif field:
             field = MarcFieldLookup(field=field)
