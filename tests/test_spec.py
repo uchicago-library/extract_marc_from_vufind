@@ -23,14 +23,13 @@ class Tests(unittest.TestCase):
         pass
 
     def testLookupMainEntryPersonalNameIndexField(self):
-        query = MarcFieldLookup("Main Entry - Personal name", "Personal name")
-        self.assertEqual(query.show_index_field(), '100a')
+        query = MarcFieldLookup(field_label="Main Entry - Personal name", subfield_label="Personal name")
+        self.assertEqual(query.show_index_fields(), ['100a'])
 
     def testLookupCartographicMathDataCoordinates(self):
         query = MarcFieldLookup(
-            "Cartographic Mathematical Data", "Statement of coordinates")
-        self.assertEqual(query.show_index_field(), '255c')
-
+            field_label="Cartographic Mathematical Data", subfield_label="Statement of coordinates")
+        self.assertEqual(query.show_index_fields(), ['255c'])
     def testExtractFromWriteableObject(self):
         """
         tests whether the following happens
@@ -111,20 +110,34 @@ class Tests(unittest.TestCase):
             write_file.seek(0)
 
         searcher = OnDiskSearcher(location=tempdir.name)
+
         result = searcher.search(
-            'John', 'Title Statement', 'Statement of responsibility, etc.')
+            'John', field_label='Title Statement', subfield_label='Statement of responsibility, etc.')
         tempdir.cleanup()
         self.assertEqual(len(result), 1)
 
-    def testSearchingVuFind(self):
+    def testSearchingVuFindWithTargetedFieldAndSubField(self):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
-        results = searcher.search('Banana', "Title Statement", "Title")
-        self.assertEqual(len(results), 10)
+        results = searcher.search('Banana', field_label="Title Statement", subfield_label="Title")
+        self.assertEqual(len(results), 190)
 
+    def testSearchingVuFindWithTargetedField(self):
+        searcher = SolrIndexSearcher(
+            SOLR_INDEX, 'ole')
+        results = searcher.search('Banana', field_label="Title Statement")
+        self.assertEqual(len(results), 265)
+
+    def testUnTargetedSearch(self):
+        searcher = SolrIndexSearcher(
+            SOLR_INDEX, 'ole')
+        results = searcher.search('Banana')
+        print(results)
+        print(len(results))
+        self.assertEqual(len(results), 271)
+ 
     def testSearchingOleIndex(self):
         url_object = urlparse(OLE_INDEX)
         finder = OLERecordFinder("4270571", url_object.netloc, url_object.scheme, url_object.path)
         check = finder.get_record()
         self.assertEqual(check[0], True)
-    

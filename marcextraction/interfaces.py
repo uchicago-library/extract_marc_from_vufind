@@ -62,7 +62,7 @@ class SolrIndexSearcher:
         else:
             raise ValueError("invalid index type '{}' for query creation".format(flag))
 
-    def search(self, query_term, query_field, query_subfield):
+    def search(self, query_term, field=None, field_label=None, subfield=None, subfield_label=None):
         """a method to run a search on the index for a particular value in a particular field
 
         Args:
@@ -74,24 +74,32 @@ class SolrIndexSearcher:
             list. An iterable containing dictionaries for each matching record in the Solr index 
                 for the query_term, query_field, and query_subfield.
         """
-        query = None
-        result = []
-        field_name = MarcFieldLookup(
-            query_field, query_subfield).show_index_field()
-        if field_name:
-            query = self.query_creator(
-                self.field_creator(field_name), query_term)
-            result = self.solr_index.search(q=query)
+        if field and subfield:
+            field = MarcFieldLookup(field=field, subfield=subfield)
+        elif field_label and subfield_label:
+            field = MarcFieldLookup(field_label=field_label, subfield_label=subfield_label)
+        elif field:
+            field = MarcFieldLookup(field=field)
+        elif field_label:
+            field = MarcFieldLookup(field_label=field_label)
         else:
-            query = query_term
-            result = self.solr_index.search(query)
-        if result.hits > 0:
-            self.total = result.hits
-            self.records = [x for x in result]
-            return self.records
-        else:
-            return []
+            field = MarcFieldLookup()
+        fields = field.show_index_fields()
+        query_chain = []
+        for field in fields:
+            full_field = self.field_creator(field)
+            query_string = self.query_creator(full_field, query_term)
+            query_chain.append(query_string)
 
+        if query_chain:
+            result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=1000)
+        else:
+            result = self.solr_index.search(query_term, fl='controlfield_001', rows=1000)
+        if result.hits > 1000:
+            raise Exception("you are performing a Solr search with more than 1000 hits. I can only get searches with 1000 at this time")
+        else:
+            records = [x.get("controlfield_001") for x in result.docs]
+            return records
 
 class OnDiskSearcher:
     """a class to use for building up a list of exported MARC files at a particular location on-disk
@@ -184,33 +192,45 @@ class OnDiskSearcher:
                 records += [record.as_dict() for record in data_package]
         return records
 
-    def search(self, query_term, query_field, query_subfield):
+    def search(self, query_term, field=None, field_label=None, subfield=None, subfield_label=None):
         """a method to search for records matching query term and field lookup
 
         Args:
             query term (str): a word or phrase that should be present in relevant MARC records
-            query_field (str): a valid MARC field label
-            query_subfield (str): a valid MARC subfield label for a subfield associated with the MARC field entered
 
+        KWArgs:
+            field (str): a MARC field number to target your search to
+            field_label (str): the official MARC21 label for a MARC field to target your search to
+            subfield (str): the subfield code to target your search to
+            subfield_label (str): the official MARC21 label for the subfield code to target your search to
         Returns:
-            list. an iterable contianing dicitonaries
+            list. an iterable containing dicitonaries
 
         :rtype list
         """
+        if field and subfield:
+            field = MarcFieldLookup(field=field, subfield=subfield)
+        elif field_label and subfield_label:
+            print("hi from search ondisk for field_label and subfield_label")
+            field = MarcFieldLookup(field_label=field_label, subfield_label=subfield_label)
+        elif field:
+            field = MarcFieldLookup(field=field)
+        elif field_label:
+            field = MarcFieldLookup(field_label=field_label)
+        fields = field.show_index_fields()
+        counter = 0
         output = []
-        field_name = MarcFieldLookup(
-            query_field, query_subfield).show_index_field()
-        if field_name:
-            counter = 0
-            for record in self.records:
-                counter += 1
-                for field in record.get("fields"):
-                    if field.get(field_name[0:3]):
-                        subfields = field.get(field_name[0:3]).get("subfields")
-                        for subfield in subfields:
-                            if subfield.get(field_name[-1]):
-                                if query_term in subfield.get(field_name[-1]):
-                                    output.append(record)
+        for record in self.records:
+          counter += 1
+          for field in fields:
+              main_field = field[0:3]
+              sub_field = field[-1]
+              for a_field in record.get("fields"):
+                  if a_field.get(main_field):
+                    for subfield in a_field.get(main_field).get("subfields"):
+                        if subfield.get(sub_field):
+                            if query_term in subfield.get(sub_field):
+                                output.append(record)
         return output
 
     @classmethod
