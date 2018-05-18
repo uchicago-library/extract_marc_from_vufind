@@ -17,6 +17,7 @@ setup(
         "Operating System :: POSIX :: Linux",
     ],
     install_requires = [
+	'lxml',
         'pymarc',
         'pysolr',
         'requests'
