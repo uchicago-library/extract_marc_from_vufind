@@ -119,7 +119,7 @@ class Tests(unittest.TestCase):
     def testSearchingVuFindWithTargetedFieldAndSubField(self):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
-        results = searcher.search('Banana', field_label="Title Statement", subfield_label="Title")
+        results = searcher.search(query='Banana', field_label="Title Statement", subfield_label="Title")
         self.assertEqual(len(results), 190)
 
     def testSearchingVuFindWithTargetedField(self):
@@ -131,7 +131,7 @@ class Tests(unittest.TestCase):
     def testUnTargetedSearch(self):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
-        results = searcher.search('Banana')
+        results = searcher.search(query='Banana')
         print(results)
         print(len(results))
         self.assertEqual(len(results), 271)

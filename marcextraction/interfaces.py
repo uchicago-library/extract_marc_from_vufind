@@ -62,7 +62,7 @@ class SolrIndexSearcher:
         else:
             raise ValueError("invalid index type '{}' for query creation".format(flag))
 
-    def search(self, query=None, field=None, field_label=None, subfield=None, subfield_label=None):
+    def search(self, query=None, field=None, field_label=None, subfield=None, subfield_label=None, rows=1000):
         """a method to run a search on the index for a particular value in a particular field
 
         Args:
@@ -92,18 +92,14 @@ class SolrIndexSearcher:
                 query_string = self.query_creator(full_field, query)
             else:
                 query_string = self.query_creator(full_field, "*")
+            print(query_string)
             query_chain.append(query_string)
-
         if query_chain:
-            result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=1000)
+            result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=rows)
         else:
-            result = self.solr_index.search(query_term, fl='controlfield_001', rows=1000)
-        if result.hits > 1000:
-            print(query_chain)
-            raise Exception("you are performing a Solr search with {} hits. I can only get searches with 1000 at this time".format(result.hits))
-        else:
-            records = [x.get("controlfield_001") for x in result.docs]
-            return [item for sublist in records for item in sublist]
+            result = self.solr_index.search(query_term, fl='controlfield_001', rows=rows)
+        records = [x.get("controlfield_001") for x in result.docs]
+        return [item for sublist in records for item in sublist]
 
 class OnDiskSearcher:
     """a class to use for building up a list of exported MARC files at a particular location on-disk
