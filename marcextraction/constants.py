@@ -133,9 +133,8 @@ LOOKUP = [
          {"code": "1", "label": "Real World Object URI"},
          {"code": "6", "label": "Linkage"},
          {"code": "8", "label": "Field link and sequence number"}
-  
      ]
-     },
+    },
     {"field": 242,
      "label": "Translation of Titlte by Cataloging Agency",
      "subfields": [
@@ -216,17 +215,26 @@ LOOKUP = [
             {"code": "5", "label": "Institution to which field applies"},
             {"code": "6", "label": "Linkage"},
             {"code": "8", "label": "Field link and sequence number"},
- 
         ]
      },
     {"field": 250,
         "label": "Edition Statement",
-        "subfields": []
-     },
+        "subfields": [
+            {"code": "a", "label": "Editionb statement"},
+            {"code": "b", "label": "Remainder of edition statement"},
+            {"code": "3", "label": "Materials specified"},
+            {"code": "6", "label": "Linkage"},
+            {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 254,
      "label": "Musical Presentation Statement",
-     "subfield": []
-     },
+     "subfield": [
+        {"code": "a", "label": "Musical presentation statement"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 255,
      "label": "Cartographic Mathematical Data",
      "subfields": [
@@ -240,54 +248,198 @@ LOOKUP = [
          {"code": "6", "label": "Linkage"},
          {"code": "8", "label": "Field link and sequence number"}
      ]
-     },
+    },
     {"field": 256,
      "label": "Computer File Characteristics",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Computer file characteristics"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 257,
      "label": "Country of Producing Entity",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "country of prudcing entity"},
+        {"code": "0", "label": "Authority record control number or standard number"},
+        {"code": "1", "label": "Real World Object URI"},
+        {"code": "2", "label": "Source"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 258,
      "label": "Philatelic Issue Data",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Issuing jurisdiction"},
+        {"code": "b", "label": "Denomination"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 260,
      "label": "Publication, Distribution, etc (Imprint)",
      "subfields": [
-         {"code": "a", "label": "Publication, distribution, etc."},
-         {"code": "b", "label": "Name of publisher, distributor, etc."},
-         {"code": "c", "label": "Date of publication, distribution, etc."},
-         {"code": "e", "label": "Place of manufacture"},
-         {"code": ""}
+        {"code": "a", "label": "Publication, distribution, etc."},
+        {"code": "b", "label": "Name of publisher, distributor, etc."},
+        {"code": "c", "label": "Date of publication, distribution, etc."},
+        {"code": "e", "label": "Place of manufacture"},
+        {"code": "f", "label": "Manufacturer"},
+        {"code": "g", "label": "DAte of manufacture"},
+        {"code": "3", "label": "Materials specified"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
      ]
-     },
+    },
     {"field": 263,
      "label": "Projected Publication Date",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Projected publication date"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 264,
      "label": "Production, Publication, Distribution, Manufacture, and Copyright Notice",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Place of production, publication, distribution, manufacture"},
+        {"code": "b", "label": "Name of producer, publisher, distributor, manufacturer"},
+        {"code": "c", "label": "Date of production, publication, distribution, manufacture, or copyright notice"}
+,
+        {"code": "3", "label": "Materials specified"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 270,
      "label": "Address",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Address"},
+        {"code": "b", "label": "City"},
+        {"code": "c", "label": "State or province"},
+        {"code": "d", "label": "Country"},
+        {"code": "e", "label": "Postal code"},
+        {"code": "f", "label": "Terms preceding attention name"},
+        {"code": "g", "label": "Attention name"},
+        {"code": "h", "label": "Attention position"},
+        {"code": "i", "label" : "Type of address"},
+        {"code": "j", "label": "Specialized telephone number"},
+        {"code": "k", "label": "Telephone number"},
+        {"code": "l", "label": "Fax number"},
+        {"code": "m", "label": "Electronic mail address"},
+        {"code": "n", "label": "TDD or TTY number"},
+        {"code": "p", "label": "Contact person"},
+        {"code": "q", "label": "Title of contact person"},
+        {"code": "r", "label": "Hours"},
+        {"code": "z", "label": "Public note"},
+        {"code": "4", "label": "Relationship"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 600,
      "label": "Subject Added Entry - Personal Name",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Personal name"},
+        {"code": "b", "label": "Numeration"},
+        {"code": "c", "label": "Titles and other words associated with a name"},
+        {"code": "d", "label": "Dates associated with a name"},
+        {"code": "e", "label": "Relator term"},
+        {"code": "f", "label": "Date of a work"},
+        {"code": "g", "label": "Miscellaneous information"},
+        {"code": "h", "label": "Medium"},
+        {"code": "j", "label": "Attribution qualifier"},
+        {"code": "k", "label": "Form subheading"},
+        {"code": "l", "label": "Language of a work"},
+        {"code": "m", "label": "Mediunm of performance for music"},
+        {"code": "n", "label": "Number of part/section of a work"},
+        {"code": "p", "label": "Name of part/section of a work"},
+        {"code": "q", "label": "Fuller form of a name"},
+        {"code": "r", "label": "Key for music"},
+        {"code": "s", "label": "Version"},
+        {"code": "t", "label": "Title of a work"},
+        {"code": "u", "label": "Affiliation"},
+        {"code": "v", "label": "Form subdivision"},
+        {"code": "x", "label": "General subdvision"},
+        {"code": "y", "label": "Chronological subdivision"},
+        {"code": "z", "label": "Geographic subdivsion"},
+        {"code": "0", "label": "Authority record control number or standard number"{,
+        {"code": "1", "label": "Real World Object URI"},
+        {"code": "2", "label": "Source of heading or term"},
+        {"code": "3", "label": "Materials specified"},
+        {"code": "4", "label": "Relationship"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {
         "field": 610,
         "label": "Subject Added Entry - Corporate Name",
-        "subfields": []
+        "subfields": [
+            {"code": "a", "label": "Corporate name or jurisdiction name as entry element"},
+            {"code": "b", "label": "Subordinate unit"},
+            {"code": "c", "label": "Location of meeting"},
+            {"code": "d", "label": "Date of meeting or treaty signing"},
+            {"code": "e", "label": "Relator term"},
+            {"code": "f", "label": "Date of a work"},
+            {"code": "g", "label": "Miscellaneous information"},
+            {"code": "h", "label": "Medium"},
+            {"code": "k", "label":  "Form subheading"},
+            {"code": "l", "label": "Language of a work"},
+            {"code": "m", "label": "Medium of performance for music"},
+            {"code": "n", "label": "Number of part/section/meeting"},
+            {"code": "o", "label": "Arranged statement for music"},
+            {"code": "p", "label": "Name of part/section of a work"},
+            {"code": "r", "label": "Key for music"},
+            {"code": "s", "label": "Version"},
+            {"code": "t", "label": "Title of a work"},
+            {"code": "u", "label": "Affiliation"},
+            {"code": "v", "label": "Form subdivision"},
+            {"code": "x", "label": "General subdivision"},
+            {"code": "y", "label": "Chronological subdivision"},
+            {"code": "z", "label": "Geographic subdivision"},
+            {"code": "0", "label": "Authority record control number or standard number"{,
+            {"code": "1", "label": "Real World Object URI"},
+            {"code": "2", "label": "Source of heading or term"},
+            {"code": "3", "label": "Materials specified"},
+            {"code": "4", "label": "Relationship"},
+            {"code": "6", "label": "Linkage"},
+            {"code": "8", "label": "Field link and sequence number"}
+
+        ]
     },
     {"field": 611,
      "label": "Subject Added Entry - Meeting Name",
-     "subfields": []
-     },
+     "subfields": [
+        {"code": "a", "label": "Meeting name or jurisdiction name as entry element"},
+        {"code": "c", "label": "Location of meeting"},
+        {"code": "d", "label": "Date of meeting or treaty signing"},
+        {"code": "e", "label": "Subordinate unit"},
+        {"code": "f", "label": "Date of a work"},
+        {"code": "g", "label": "Miscellaneious information"},
+        {"code": "h", "label": "Medium"},
+        {"code": "j", "label": "Relator term"},
+        {"code": "k", "label": "Form subheading"},
+        {"code": "l", "label": "Language of a work"},
+        {"code": "n", "label": "Number of part/section of a work"},
+        {"code": "p", "label": "Name of part/section of a work"},
+        {"code": "q", "label": "Name of meeting following jurisdiction name entry element"},
+        {"code": "s", "label": "Version"},
+        {"code": "t", "label": "title of a work"},
+        {"code": "u", "label": "Affiliation"},
+        {"code": "v", "label": "Form subdivision"},
+        {"code": "x", "label": "General subdivision"},
+        {"code": "y", "label": "Chronological subdivision"},
+        {"code": "z", "label": "Geopgraphic subdivision"},
+        {"code": "0", "label": "Authority record control number or standard number"},
+        {"code": "1", "label": "Real World Object URI"},
+        {"code": "2", "label": "Source of heading or term"},
+        {"code": "3", "label": "Materials specified"},
+        {"code": "4", "label": "Relationship"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
     {"field": 630,
      "label": "Subject Added Entry - Uniform Title",
      "subfields": []
@@ -538,11 +690,40 @@ LOOKUP = [
      },
     {"field": 850,
      "label": "Holding Institution",
-     "subfields": []
+     "subfields": [
+        {"code": "a", "label": "Holding institution",
+         "code": "8", "label": "Field link and sequence number"}
+     ]
      },
     {"field": 852,
      "label": "Location",
-     "subfields": []
+     "subfields": [
+        {"code": "a", "label": "Location"},
+        {"code": "b", "label": "Sublocation or collection"},
+        {"code": "c", "Label": "Shelving location"},
+        {"code": "d", "label": "Former shelving location"},
+        {"code": "e", "label": "Address"},
+        {"code": "f", "label": "Coded location qualifier"},
+        {"code": "g", "label": "Non-coded location qualifier"},
+        {"code": "h", "label": "Classification part"},
+        {"code": "i", "label": "Item part"},
+        {"code": "j", "label": "Shelving control number"},
+        {"code": "k", "label": "Call number prefix"},
+        {"code": "l", "label": "Shelving form of title"},
+        {"code": "m", "label": "Call number suffix"},
+        {"code": "n", "label": "Country code"},
+        {"code": "p", "label": "Piece designation"},
+        {"code": "q", "label": "Piece physical condition"},
+        {"code": "s", "label": "Coyright article"},
+        {"code": "t", "label": "Copy number"},
+        {"code": "u", "label": "Uniform Resource Identifier"},
+        {"code": "x", "label": "Nonpublic note"},
+        {"code": "z", "label": "Public note"},
+        {"code": "2", "label": "Source of classification or shelving scheme"},
+        {"code": "3", "label": "Material specified"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Sequence number"}
+     ]
      },
     {"field": 853,
      "label": "Captions and Pattern - Basic Bibliographic Unit",
@@ -611,5 +792,155 @@ LOOKUP = [
     {"field": 868,
      "label": "Textual Holdings - Indexes",
      "subfields": []
-     }
+     },
+    {"field": 876,
+     "label": "Item Information - Basic Bibliographic Unit",
+     "subfields": []
+    },
+    {"field": 877,
+     "label": "Item Information - Basic Bibliographic Unit",
+     "subfields": []
+    },
+    {"field": 878,
+     "label": "Item Information - Indexes",
+     "subfields": []
+    },
+    {"field": 880,
+     "label": "Alternate Graphic Representation",
+     "subfields": [
+        {"code": "a", "label": "Same as associated field"},
+        {"code": "b", "label": "Same as associated field"},
+        {"code": "c", "label": "Same as associated field"},
+        {"code": "d", "label": "Same as associated field"},
+        {"code": "e", "label": "Same as associated field"},
+        {"code": "f", "label": "Same as associated field"},
+        {"code": "g", "label": "Same as associated field"},
+        {"code": "h", "label": "Same as associated field"},
+        {"code": "i", "label": "Same as associated field"},
+        {"code": "j", "label": "Same as associated field"},
+        {"code": "k", "label": "Same as associated field"},
+        {"code": "l", "label": "Same as associated field"},
+        {"code": "m", "label": "Same as associated field"},
+        {"code": "n", "label": "Same as associated field"},
+        {"code": "o", "label": "Same as associated field"},
+        {"code": "p", "label": "Same as associated field"},
+        {"code": "q", "label": "Same as associated field"},
+        {"code": "r", "label": "Same as associated field"},
+        {"code": "s", "label": "Same as associated field"},
+        {"code": "t", "label": "Same as associated field"},
+        {"code": "u", "label": "Same as associated field"},
+        {"code": "v", "label": "Same as associated field"},
+        {"code": "w", "label": "Same as associated field"},
+        {"code": "x", "label": "Same as associated field"},
+        {"code": "y", "label": "Same as associated field"},
+        {"code": "z", "label": "Same as associated field"},
+        {"code": "0", "label": "Same as associated field"},
+        {"code": "1", "label": "Same as associated field"},
+        {"code": "2", "label": "Same as associated field"},
+        {"code": "3", "label": "Same as associated field"},
+        {"code": "4", "label": "Same as associated field"},
+        {"code": "5", "label": "Same as associated field"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "7", "label": "Same as associated field"},
+        {"code": "8", "label": "Same as associated field"},
+        {"code": "9", "label": "Same as associated field"}
+     ]
+    },
+    {"field": 882,
+     "label": "Replacement Record Information",
+     "subfields": [
+        {"code": "a", "label": "Replacement title"},
+        {"code": "i", "label": "Explanatory text"},
+        {"code": "w", "label": "Replacement bibliographic record control number"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "8", "label": "Field link and sequence number"}
+     ]
+    },
+    {"field": 883,
+     "label": "Machine-Generated Metadata Provenance",
+     "subfields": [
+        {"code": "a", "label": "Generation process"},
+        {"code": "c", "label": "Confidence value"},
+        {"code": "d", "label": "Generation date"},
+        {"code": "q", "label": "Generation agency"},
+        {"code": "x", "label": "Validity end date"},
+        {"code": "u", "label": "Uniform Resource Identifier"},
+        {"code": "w", "label": "Bibliographic record control number"},
+        {"code": "0", "label": "Authority record control number or standard number"},
+        {"code": "1", "label": "Real World Object URI"},
+        {"code": "8", "label": "Field link and sequence number"},
+    ]
+    },
+    {"field": 884,
+     "label": "Description Conversion Information",
+     "subfields": [
+        {"code": "a", "label": "Conversion process"},
+        {"code": "g", "label": "Conversion title"},
+        {"code": "k", "label": "Identifier of source metadata"},
+        {"code": "q", "label": "Conversion agency"},
+        {"code": "u", "label": "Uniform Resource Identifier"}
+     ]
+    },
+    {"field": 885,
+     "label": "Matching Information",
+     "subfields": [
+        {"code": "a", "label": "Matching information"},
+        {"code": "b", "label": "Status of matching and its checking"},
+        {"code": "c", "label": "Confidence value"},
+        {"code": "d", "label": "Generation date"},
+        {"code": "w", "label": "Record control number"},
+        {"code": "x", "label": "Nonpublic note"},
+        {"code": "z", "label": "Public note"},
+        {"code": "0", "label": "Authority record control number or standard number"},
+        {"code": "1", "label": "Real World Object URI"},
+        {"code": "2", "label": "Source"},
+        {"code": "5", "label": "Instution to which field applies"},
+     ]
+    },
+    {"field": 886,
+     "label": "Foreign MARC Information Field",
+     "subfields": [
+        {"code": "a", "label": "Same as associated field"},
+        {"code": "b", "label": "Same as associated field"},
+        {"code": "c", "label": "Same as associated field"},
+        {"code": "d", "label": "Same as associated field"},
+        {"code": "e", "label": "Same as associated field"},
+        {"code": "f", "label": "Same as associated field"},
+        {"code": "g", "label": "Same as associated field"},
+        {"code": "h", "label": "Same as associated field"},
+        {"code": "i", "label": "Same as associated field"},
+        {"code": "j", "label": "Same as associated field"},
+        {"code": "k", "label": "Same as associated field"},
+        {"code": "l", "label": "Same as associated field"},
+        {"code": "m", "label": "Same as associated field"},
+        {"code": "n", "label": "Same as associated field"},
+        {"code": "o", "label": "Same as associated field"},
+        {"code": "p", "label": "Same as associated field"},
+        {"code": "q", "label": "Same as associated field"},
+        {"code": "r", "label": "Same as associated field"},
+        {"code": "s", "label": "Same as associated field"},
+        {"code": "t", "label": "Same as associated field"},
+        {"code": "u", "label": "Same as associated field"},
+        {"code": "v", "label": "Same as associated field"},
+        {"code": "w", "label": "Same as associated field"},
+        {"code": "x", "label": "Same as associated field"},
+        {"code": "y", "label": "Same as associated field"},
+        {"code": "z", "label": "Same as associated field"},
+        {"code": "0", "label": "Same as associated field"},
+        {"code": "1", "label": "Same as associated field"},
+        {"code": "2", "label": "Same as associated field"},
+        {"code": "3", "label": "Same as associated field"},
+        {"code": "4", "label": "Same as associated field"},
+        {"code": "5", "label": "Same as associated field"},
+        {"code": "6", "label": "Linkage"},
+        {"code": "7", "label": "Same as associated field"},
+        {"code": "8", "label": "Same as associated field"},
+        {"code": "9", "label": "Same as associated field"}
+ 
+     ]
+    },
+    {"field": 887,
+     "label": "Non-MARC Information Field",
+     "subfields": []
+    }
 ]

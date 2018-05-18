@@ -47,10 +47,10 @@ class MarcFieldLookup:
         elif number:
             field = [x for x in LOOKUP if x.get("field") == number]
             err_msg = "no field found for {}".format(number)
-        if field: 
+        if field:
             subfields = field[0].get("subfields")
             if not subfields:
-                err_msg = "no subfields defined for field {}".format(field.get("field"))
+                err_msg = "no subfields defined for field {}".format(field[0].get("field"))
                 raise ValueError(err_msg)
             else:
                 return (field[0].get("field") , field[0].get("subfields"))
@@ -68,7 +68,6 @@ class MarcFieldLookup:
             return subfield[0].get("code")
         else:
             raise ValueError(err_msg)
-        
 
     def _find_all_subfields_by_field_label(self, field_label):
         output = []
@@ -105,7 +104,7 @@ class MarcFieldLookup:
 
             -- ("Main Entry Uniform Title, "Uniform Title") -> 130a
             -- ("Index Term-Genre/Form", "Non-focus term") -> 655b
-        """ 
+        """
         field, subfields = self._find_a_field(label=field_name)
         subfield = self._find_a_subfield(subfields, label=sub_field_name)
         return ["{}{}".format(field, subfield)]
