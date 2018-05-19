@@ -92,7 +92,6 @@ class SolrIndexSearcher:
                 query_string = self.query_creator(full_field, query)
             else:
                 query_string = self.query_creator(full_field, "*")
-            print(query_string)
             query_chain.append(query_string)
         if query_chain:
             result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=rows)

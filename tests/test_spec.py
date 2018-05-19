@@ -132,10 +132,8 @@ class Tests(unittest.TestCase):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
         results = searcher.search(query='Banana')
-        print(results)
-        print(len(results))
-        self.assertEqual(len(results), 271)
- 
+        self.assertEqual(len(results), 273)
+
     def testSearchingOleIndex(self):
         url_object = urlparse(OLE_INDEX)
         finder = OLERecordFinder("4270571", url_object.netloc, url_object.scheme, url_object.path)
