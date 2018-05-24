@@ -4,7 +4,7 @@ setup(
     name="marcExtraction",
     author="Tyler Danstrom",
     author_email="tdanstrom@uchicago.edu",
-    version="0.5.0",
+    version="1.0.0",
     license="LGPL3.0",
     description="An application to extract MARC records from the catalog",
     keywords="python3.6 iiif-presentation manifests marc",
@@ -17,7 +17,7 @@ setup(
         "Operating System :: POSIX :: Linux",
     ],
     install_requires = [
-	'lxml',
+    	'lxml',
         'pymarc',
         'pysolr',
         'requests'
