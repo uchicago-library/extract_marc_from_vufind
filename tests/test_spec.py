@@ -106,30 +106,12 @@ class Tests(unittest.TestCase):
         tempdir.cleanup()
         self.assertEqual(len(result), 1)
 
-<<<<<<< HEAD
-=======
-    def testSearchingVuFindWithTargetedFieldAndSubField(self):
-        searcher = SolrIndexSearcher(
-            SOLR_INDEX, 'ole')
-        results = searcher.search(query='Banana', field_label="Title Statement", subfield_label="Title")
-        self.assertEqual(len(results), 190)
-
->>>>>>> 79c08385a53d87fb2154f3c463f0c9c04a639e63
     def testSearchingVuFindWithTargetedField(self):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
         results = searcher.search('Banana', field='245', subfields=['a'])
         self.assertEqual(len(results), 190)
 
-<<<<<<< HEAD
-=======
-    def testUnTargetedSearch(self):
-        searcher = SolrIndexSearcher(
-            SOLR_INDEX, 'ole')
-        results = searcher.search(query='Banana')
-        self.assertEqual(len(results), 273)
-
->>>>>>> 79c08385a53d87fb2154f3c463f0c9c04a639e63
     def testSearchingOleIndex(self):
         url_object = urlparse(OLE_INDEX)
         finder = OLERecordFinder("4270571", url_object.netloc, url_object.scheme, url_object.path)
