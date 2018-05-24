@@ -60,7 +60,11 @@ class SolrIndexSearcher:
         else:
             raise ValueError("invalid index type '{}' for query creation".format(flag))
 
+<<<<<<< HEAD
     def search(self, query_term, field, subfields):
+=======
+    def search(self, query=None, field=None, field_label=None, subfield=None, subfield_label=None, rows=1000):
+>>>>>>> 79c08385a53d87fb2154f3c463f0c9c04a639e63
         """a method to run a search on the index for a particular value in a particular field
 
         Args:
@@ -73,22 +77,28 @@ class SolrIndexSearcher:
                 for the query_term, query_field, and query_subfield.
         """
         query_chain = []
+<<<<<<< HEAD
         for subfield in subfields:
             print(subfield)
             initial_string = field + subfield
             field = self.field_creator(initial_string)
             print(field)
             query_chain.append(self.query_creator(field, query_term)) 
+=======
+        for field in fields:
+            full_field = self.field_creator(field)
+            if query:
+                query_string = self.query_creator(full_field, query)
+            else:
+                query_string = self.query_creator(full_field, "*")
+            query_chain.append(query_string)
+>>>>>>> 79c08385a53d87fb2154f3c463f0c9c04a639e63
         if query_chain:
-            result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=1000)
+            result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=rows)
         else:
-            result = self.solr_index.search(query_term, fl='controlfield_001', rows=1000)
-        if result.hits > 1000:
-            print(query_chain)
-            raise Exception("you are performing a Solr search with {} hits. I can only get searches with 1000 at this time".format(result.hits))
-        else:
-            records = [x.get("controlfield_001") for x in result.docs]
-            return [item for sublist in records for item in sublist]
+            result = self.solr_index.search(query_term, fl='controlfield_001', rows=rows)
+        records = [x.get("controlfield_001") for x in result.docs]
+        return [item for sublist in records for item in sublist]
 
 class OnDiskSearcher:
     """a class to use for building up a list of exported MARC files at a particular location on-disk
