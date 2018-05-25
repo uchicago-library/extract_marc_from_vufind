@@ -19,182 +19,13 @@ And you are ready to start hacking new functionality to the code base. Don't for
 
 # How to Use the Library
 
-To see the field and subfield labels to use when searching for a particular MARC field, follow the instructions below.
 
-```python
->>> from marcextraction import MarcFieldLookup
->>> mf = MarcFieldLookup
->>> mf.show_valid_lookups()
-MARC Field Number: Main Entry - Personal name
-        Subfield: Personal name
-        Subfield: Numeration
-        Subfield: Title and words associated with name
-        Subfield: Dates associated with name
-        Subfield: Relator term
-        Subfield: Date of a work
-        Subfield: Miscellaneous information
-        Subfield: Attribution qualifier
-        Subfield: Form subheading
-        Subfield: Language of a work
-        Subfield: Number of part/section of a work
-        Subfield: Name of part/section work
-        Subfield: Fuller form of name
-        Subfield: Title of a work
-        Subfield: Affiliation
-        Subfield: Authority record control number or standard number
-        Subfield: REal World Object URI
-        Subfield: Relationship
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Main Entry - Corporate Name
-        Subfield: Corporate name or jurisdiction name as entry element
-        Subfield: Subordinate unit
-        Subfield: Location of meeting
-        Subfield: Date of meeting or treaty signing
-        Subfield: Relator term
-        Subfield: Date of a work
-        Subfield: Miscellaneous information
-        Subfield: Language of a work
-        Subfield: Number of part/section/meeting
-        Subfield: Name of part/section of a work
-        Subfield: Title of a work
-        Subfield: Affiliation
-        Subfield: Authority record control number or standard number
-        Subfield: Real World Object URI
-        Subfield: Linkage
-        Subfield: Field link and sequence identifier
-MARC Field Number: Main Entry - Meeting Name
-        Subfield: Meeting name or jurisdiction name as entry element
-        Subfield: Location of meeting
-        Subfield: Date of meeting or treaty signing
-        Subfield: Subordinate unit
-        Subfield: Date of a work
-        Subfield: Miscellaneous information
-        Subfield: Form subheading
-        Subfield: Language of a work
-        Subfield: Number of part/section/meeting
-        Subfield: Name of a part/section of a work
-        Subfield: Name of meeting following jurisdiction name entry element
-        Subfield: Title of a work
-        Subfield: Affiliation
-        Subfield: Authority record control number or standard number
-        Subfield: Real World Object URI
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Main Entry - Uniform Title
-        Subfield: Uniform title
-        Subfield: Date of treaty signing
-        Subfield: Date of work
-        Subfield: Miscellaneous information
-        Subfield: Medium
-        Subfield: Form subheading
-        Subfield: Language of a work
-        Subfield: Medium of performance for music
-        Subfield: Number of part/section of a work
-        Subfield: Arranged statement for music
-        Subfield: Name of part/section of a work
-        Subfield: Key for music
-        Subfield: Version
-        Subfield: Title of a work
-        Subfield: Authority record control number or standard number
-        Subfield: Real World Object URI
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Abbreviated Title
-        Subfield: Abbreviated title
-        Subfield: Qualifying information
-MARC Field Number: Key Title
-        Subfield: Key title
-        Subfield: Qualifying information
-        Subfield: Linkage
-        Subfield: Field lnk and sequence number
-MARC Field Number: Uniform Title
-        Subfield: Uniform title
-        Subfield: Date of treaty signing
-        Subfield: Date of work
-        Subfield: Miscellaneous information
-        Subfield: Medium
-        Subfield: Form subheading
-        Subfield: Language of a work
-        Subfield: Medium of performance for music
-        Subfield: Number of part/section of a work
-        Subfield: Arranged statement for music
-        Subfield: Name of part/section of a work
-        Subfield: Key for music
-        Subfield: Version
-        Subfield: Authority record control number or standard number
-        Subfield: Real World Object URI
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Translation of Titlte by Cataloging Agency
-        Subfield: Title
-        Subfield: Remainder of title
-        Subfield: Statement of responsibility
-        Subfield: Medium
-        Subfield: Number of part/section of a work
-        Subfield: Name of part/section of a work
-        Subfield: Language of code translated title
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Collection Uniform Title
-        Subfield: Uniform title
-        Subfield: Date of treaty signing
-        Subfield: Date of a work
-        Subfield: Miscellaneous information
-        Subfield: Medium
-        Subfield: Form subheading
-        Subfield: Language of a work
-        Subfield: Medium of performance music
-        Subfield: Number of part/section of a work
-        Subfield: Arrange statement for music
-        Subfield: Name of part/section of a work
-        Subfield: Key for music
-        Subfield: Version
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Title Statement
-        Subfield: Title
-        Subfield: Remainder of title
-        Subfield: Statement of responsibility
-        Subfield: Inclusive dates
-        Subfield: Buk dates
-        Subfield: Medium
-        Subfield: Form
-        Subfield: Number of part/section of a work
-        Subfield: Name of part/section of a work
-        Subfield: Version
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Varying Form of Title
-        Subfield: Title proper/short title
-        Subfield: Remainder of title
-        Subfield: Date or sequential designation
-        Subfield: Miscellaneous information
-        Subfield: Medium
-        Subfield: Display text
-        Subfield: Number of part/section of a work
-        Subfield: Name of part/section of a work
-        Subfield: Institution to which field applies
-        Subfield: Linkage
-        Subfield: Field link and sequence number
-MARC Field Number: Former Title
-```
-
-In order to get the index field name for Uniform Title:
-
-```python
->>> from marcextraction.lookup import MarcFieldLookup
->>> mf = MarcFieldLookup("Main Entry - Uniform Title", "Uniform title")
->>> mf.show_index_field()
-130a
-```
-
-If on the other hand you are looking to find some particular subset of a bunch of MARC records that you have on-disk, you can do something like the following.
+If you are looking to find some particular subset of a bunch of MARC records that you have on-disk, you can do something like the following.
 
 ```python
 >>> from marcextraction.interfaces import OnDiskSearcher
 >>> searcher = OnDiskSearcher(location='/path/to/a/bunch/of/marc/record/files')
->>> results = searcher.search('banana', 'Title Statement', 'Title')
+>>> results = searcher.search('banana', '245', ['a'])
 ```
 
 This example will do the following
@@ -203,22 +34,20 @@ This example will do the following
 1. Perform a search on the MARC records for any record with banana in MARC field '245', subfield 'a'.
 
 Still, you might be in an organization using OLE. In which case, you could do something like this.
-
 ```python
->>> from marcextraction.interfaces import VuFindSearcher
->>> searcher = SolrIndexSearcher('http://your.domain/path/to/index', create_ole_index_field, create_ole_query)
->>> results = searcher.search('banana', 'Title Statement', 'Title')
+>>> from marcextraction.interfaces import SolrIndexSearcher
+>>> searcher = SolrIndexSearcher('http://your.domain/path/to/index', 'ole', 'ole')
+>>> results = searcher.search('banana', '245', ['a'], rows=100)
 ```
 This example does the same thing as the earlier example except this time it's searching a SOLR index. 
 
-If you want get the bib numbers for a particular set of results from am OLE index search, you should do the following.
+If you want to extract a particular MARC record from OLE, do the following:
 
 ```python
->>> from marcextraction.interfaces import VuFindSearcher
->>> searcher = SolrIndexSearcher('http://your.domain/path/to/index', create_ole_index_field, create_ole_query)
->>> results = searcher.search('banana', 'Title Statement', 'Title')
->>> results = find_ole_bib_numbers(results)
-```
+>>> from marcextraction.interfaces import OLERecordFinder
+>>> getter = OLERecordFinder(100134, 'domain.of.ole.sru.app', 'http', '/path/to/app'
+>>> getter.get_record()
+``````
 
 ## Internal Project Management
 
