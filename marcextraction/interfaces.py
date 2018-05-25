@@ -74,10 +74,8 @@ class SolrIndexSearcher:
         """
         query_chain = []
         for subfield in subfields:
-            print(subfield)
             initial_string = field + subfield
             field = self.field_creator(initial_string)
-            print(field)
             query_chain.append(self.query_creator(field, query_term)) 
         if query_chain:
             result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=rows)
