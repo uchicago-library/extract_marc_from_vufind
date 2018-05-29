@@ -110,7 +110,14 @@ class Tests(unittest.TestCase):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
         results = searcher.search('Banana', field='245', subfields=['a'])
-        self.assertEqual(len(results), 190)
+        self.assertEqual(len(results), 188)
+
+    def testSearchingVuFindWithPhraseSearch(self):
+        searcher = SolrIndexSearcher(
+            SOLR_INDEX, 'ole')
+        results = searcher.search('Social scientist', field='245', subfields=['a'], phrase_search=True)
+        self.assertEqual(len(results), 120)
+
 
     def testSearchingOleIndex(self):
         url_object = urlparse(OLE_INDEX)

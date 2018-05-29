@@ -60,7 +60,7 @@ class SolrIndexSearcher:
         else:
             raise ValueError("invalid index type '{}' for query creation".format(flag))
 
-    def search(self, query_term, field, subfields, rows=1000):
+    def search(self, query_term, field, subfields, rows=1000, phrase_search=False):
         """a method to run a search on the index for a particular value in a particular field
 
         Args:
@@ -76,7 +76,7 @@ class SolrIndexSearcher:
         for subfield in subfields:
             initial_string = field + subfield
             field = self.field_creator(initial_string)
-            query_chain.append(self.query_creator(field, query_term)) 
+            query_chain.append(self.query_creator(field, query_term, phrase_term=phrase_search)) 
         if query_chain:
             result = self.solr_index.search(q=' '.join(query_chain), fl='controlfield_001', rows=rows)
         else:

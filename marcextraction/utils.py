@@ -9,7 +9,7 @@ def create_ole_index_field(field_name):
     """
     return "mdf_{}".format(field_name)
 
-def create_ole_query(field_name, query_term):
+def create_ole_query(field_name, query_term, phrase_term=False):
     """a method to return the query string for searching for making a field query in OLE
 
     Args:
@@ -19,7 +19,10 @@ def create_ole_query(field_name, query_term):
     Returns:
         str. A full query string to be entered into a Solr index for searching on a particular field. Ex. 'mdf_245a:banana'
     """
-    return "{}:\"{}\"".format(field_name, query_term)
+    if phrase_term:
+        return "{}:\"{}\"".format(field_name, query_term)
+    else:
+        return "{}:{}".format(field_name, query_term)
 
 def find_ole_bib_numbers(ole_data_list):
     """a method to find bib numbers from a set of OLE results
