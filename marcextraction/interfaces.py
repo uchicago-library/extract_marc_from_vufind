@@ -74,7 +74,10 @@ class SolrIndexSearcher:
         """
         query_chain = []
         for subfield in subfields:
-            initial_string = field + subfield
+            if subfield:
+                initial_string = field + subfield
+            else:
+                initial_string = field
             field = self.field_creator(initial_string)
             query_chain.append(self.query_creator(field, query_term, phrase_term=phrase_search)) 
         if query_chain:
