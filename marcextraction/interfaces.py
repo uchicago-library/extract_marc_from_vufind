@@ -64,9 +64,14 @@ class SolrIndexSearcher:
         """a method to run a search on the index for a particular value in a particular field
 
         Args:
-            query_term (str): the string to be searched. This string will be stemmed in Solr searches.
-            field (str): a MARC field number as a string
-            subfields (list): a list of subfield codes related to the field that you want to search
+            query_term (str): the string to be searched. This string will be stemmed in Solr searches..
+            field (str): a MARC field number as a string.
+            subfields (list): a list of subfield codes related to the field that you want to search.
+
+        KWArgs:
+            rows (int): the number of records that you want to retrieve from the Solr index. default is 1000.
+            phrase_search (bool): a flag indicating whether you want to perform a full phrase search. Default
+                                  is False which will perform a word search.
 
         Returns:
             list. An iterable containing dictionaries for each matching record in the Solr index 
