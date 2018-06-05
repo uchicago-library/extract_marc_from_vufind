@@ -116,7 +116,7 @@ class Tests(unittest.TestCase):
         searcher = SolrIndexSearcher(
             SOLR_INDEX, 'ole')
         results = searcher.search('Social scientist', field='245', subfields=['a'], phrase_search=True)
-        self.assertEqual(len(results), 120)
+        self.assertEqual(len(results), 119)
 
 
     def testSearchingOleIndex(self):
